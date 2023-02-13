@@ -1,10 +1,14 @@
 package transport;
 import com.company.CargoDriver;
+import com.company.Mechanic;
+import java.util.List;
 
 public class Cargo extends Transport<CargoDriver> implements Participant {
-    Tonnage tonnage;
-    public Cargo(String brand, String model, String engineVolume, CargoDriver driver, Tonnage tonnage) {
-        super(brand, model, engineVolume, driver);
+    private Tonnage tonnage;
+
+    public Cargo(String brand, String model, String engineVolume,
+                 CargoDriver driver, Tonnage tonnage, List<Mechanic> mechanicList) {
+        super(brand, model, engineVolume, driver, mechanicList);
         this.tonnage = tonnage;
     }
 
@@ -12,38 +16,35 @@ public class Cargo extends Transport<CargoDriver> implements Participant {
     public void startMove() {
         System.out.println("Cargo car starts moving...");
     }
-
     @Override
     public void stopMove() {
         System.out.println("Cargo car stops moving...");
     }
-
     @Override
     public void pit_stop() {
         System.out.println("Грузовая машина ушла на пит-стоп");
     }
-
     @Override
     public void bestTime() {
         System.out.println("Лучшее время грузовой машины:__:__");
     }
-
     @Override
     public void maxSpeed() {
         System.out.println("Максимальная скорость грузовой машины:___");
     }
-
-
     @Override
     public Type getType() {
         return Type.valueOf("CARGO");
     }
-
     @Override
-    public void passDiagnostics() {
-        System.out.println("На диагностике для грузовых авто...");
+    public boolean passDiagnostics() {
+        if (getDiagnosticsFlag()) {
+            return true;
+        } else {
+            setDiagnosticsFlag(true);
+            return false;
+        }
     }
-
     @Override
     public void printType() {
         if (tonnage != null) {

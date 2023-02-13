@@ -1,10 +1,14 @@
 package transport;
 import com.company.BusDriver;
+import com.company.Mechanic;
+import java.util.List;
 
 public class Bus extends Transport<BusDriver> {
-    Capacity capacity;
-    public Bus(String brand, String model, String engineVolume, BusDriver driver, Capacity capacity) {
-        super(brand, model, engineVolume, driver);
+    private Capacity capacity;
+
+    public Bus(String brand, String model, String engineVolume,
+               BusDriver driver, Capacity capacity, List<Mechanic> mechanicList) {
+        super(brand, model, engineVolume, driver, mechanicList);
         this.capacity = capacity;
     }
 
@@ -35,7 +39,7 @@ public class Bus extends Transport<BusDriver> {
     }
 
     @Override
-    public void passDiagnostics() throws TransportTypeException{
+    public boolean passDiagnostics() throws TransportTypeException{
         throw new TransportTypeException("Автобусам проходить диагностику не нужно");
     }
 
@@ -56,7 +60,7 @@ public class Bus extends Transport<BusDriver> {
                 '}';
     }
 
-    public enum Capacity{
+    public enum Capacity {
         specialSmall(null, 10),
         small(null, 25),
         middle(25, 50),

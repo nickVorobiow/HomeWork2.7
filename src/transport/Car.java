@@ -1,12 +1,14 @@
 package transport;
 
 import com.company.CarDriver;
+import com.company.Mechanic;
+import java.util.List;
 
 public class Car extends Transport<CarDriver> implements Participant{
-    BodyType bodyType;
+    private BodyType bodyType;
 
-    public Car(String brand, String model, String engineVolume, CarDriver driver, BodyType bodyType) {
-        super(brand, model, engineVolume, driver);
+    public Car(String brand, String model, String engineVolume, CarDriver driver, BodyType bodyType, List<Mechanic> mechanicList) {
+        super(brand, model, engineVolume, driver, mechanicList);
         this.bodyType = bodyType;
     }
 
@@ -31,8 +33,13 @@ public class Car extends Transport<CarDriver> implements Participant{
     }
 
     @Override
-    public void passDiagnostics() {
-        System.out.println("На диагностике для легковых авто...");
+    public boolean passDiagnostics() {
+        if (getDiagnosticsFlag()) {
+            return true;
+        } else {
+            setDiagnosticsFlag(true);
+            return false;
+        }
     }
 
     @Override
@@ -44,8 +51,6 @@ public class Car extends Transport<CarDriver> implements Participant{
             System.out.println("Данных по транспортному средству недостаточно");
         }
     }
-
-
 
     @Override
     public String toString() {
